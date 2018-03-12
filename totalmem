@@ -1,0 +1,6 @@
+#!/bin/bash
+
+#This is a script to give me total mem usage on a linux OS. 
+#This is especially useful on guests that do not have cgroups setup. 
+
+ps -eo size,pid,user,command | awk '{ hr=$1/1024 ; printf("%13.6f Mb ",hr) } { for ( x=4 ; x<=NF ; x++ ) { printf("%s ",$x) } print "" }' | sort | sed 's/ \+/ /g' | sed 's/^ //g' | cut -d ' ' -f 1 | datamash sum 1
