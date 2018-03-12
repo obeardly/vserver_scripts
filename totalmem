@@ -2,6 +2,7 @@
 
 #This is a script to give me total mem usage on a linux OS. 
 #This is especially useful on guests that do not have cgroups setup. 
+#For whatever reason, this does not work on Ubuntu. 
 
 PKG_OK=$(dpkg-query -W --showformat='${Status}\n' datamash | grep "install ok installed")
   if [ "" == "$PKG_OK" ]; then
