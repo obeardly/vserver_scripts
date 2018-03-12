@@ -1,12 +1,12 @@
 #!/bin/bash
 
-#This is a script to give me total mem usage on a linux OS. 
+#This is a script to give me total mem usage on a linux guest in linux-vserver. 
 #This is especially useful on guests that do not have cgroups setup. 
-#For whatever reason, this does not work on Ubuntu. 
+#If you're machine is swapping, it will be added to to this total. 
 
 PKG_OK=$(dpkg-query -W --showformat='${Status}\n' datamash | grep "install ok installed")
   if [ "" == "$PKG_OK" ]; then
         sudo apt-get --force-yes --yes install datamash
   else
-        ps -eo size | awk '{ hr=$1/1024 ; printf("%13.6f Mb ",hr) } { for ( x=4 ; x<=NF ; x++ ) { printf("%s ",$x) } print "" }' | sort | sed 's/ \+/ /g' | sed 's/^ //g' | cut -d ' ' -f 1 | datamash sum 1
+        ps -eo size,pid,user,command | awk '{ hr=$1/1024 ; printf("%13.6f Mb ",hr) } { for ( x=4 ; x<=NF ; x++ ) { printf("%s ",$x) } print "" }' | sort | sed 's/ \+/ /g' | sed 's/^ //g' | cut -d ' ' -f 1 | datamash sum 1
 fi
