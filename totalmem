@@ -7,5 +7,5 @@ PKG_OK=$(dpkg-query -W --showformat='${Status}\n' datamash | grep "install ok in
   if [ "" == "$PKG_OK" ]; then
         sudo apt-get --force-yes --yes install datamash
   else
-        ps -eo size,pid,user,command | awk '{ hr=$1/1024 ; printf("%13.6f Mb ",hr) } { for ( x=4 ; x<=NF ; x++ ) { printf("%s ",$x) } print "" }' | sort | sed 's/ \+/ /g' | sed 's/^ //g' | cut -d ' ' -f 1 | datamash sum 1
+        ps -eo size | awk '{ hr=$1/1024 ; printf("%13.6f Mb ",hr) } { for ( x=4 ; x<=NF ; x++ ) { printf("%s ",$x) } print "" }' | sort | sed 's/ \+/ /g' | sed 's/^ //g' | cut -d ' ' -f 1 | datamash sum 1
 fi
